@@ -42,16 +42,12 @@ let map = L.map('mapid', {
 L.control.layers(baseMaps).addTo(map);
 
 // Accessing the airport GeoJSON URL
-let airportData = "https://raw.githubusercontent.com/sathvikaithala/Mapping_Earthquakes/master/majorAirports.json";
+let torontoData = "https://raw.githubusercontent.com/MasterMark2021/Mapping_Earthquakes/Mapping_GeoJSON_Linestrings/torontoRoutes.json";
 
 
 // Grabbing our GeoJSON data.
-d3.json(airportData).then(function(data) {
-    console.log(data);
-  // Creating a GeoJSON layer with the retrieved data.
-    L.geoJson(data, {
-      onEachFeature: function(feature, layer){
-          layer.bindPopup("<h2> Airport Code: " + feature.properties.faa + "</h2>\n\n<h4>Airport Name: " + feature.properties.name + "</h4>\n\n<h5>" + feature.properties.city + ", " + feature.properties.country + "</h5>" );
-      }
-    }).addTo(map);
+d3.json(torontoData).then(function(data) {
+  console.log(data);
+// Creating a GeoJSON layer with the retrieved data.
+L.geoJSON(data).addTo(map);
 });
