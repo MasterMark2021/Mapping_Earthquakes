@@ -1,22 +1,6 @@
-// Create the map object with center and zoom level.
-let map = L.map('mapid').setView([30, 30], 2);
-// Accessing the airport GeoJSON URL
-let airportData = "https://raw.githubusercontent.com/MasterMark2021/Mapping_Earthquakes/Mapping_GeoJSON_Points/majorAirports.json";
-// Grabbing our GeoJSON data.
-d3.json(airportData).then(function(data) {
-    console.log(data);
-  // Creating a GeoJSON layer with the retrieved data.
-  L.geoJSON(data).addTo(map);
-});
+// Add console.log to check to see if our code is working.
+console.log("Console is working");
 
-/* another way to set the map:
-    let map = L.map("mapid", {
-    center: [
-        40.7, -94.5
-    ],
-    zoom: 4
-    });
-*/
 
 // We create the tile layer that will be the background of our map.
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', { //We assign the tileLayer() method, as shown in the Quick Start Guide’s “Setting up the map” section to the variable streets. Leaflet doesn't provide a tile layer. Instead, it offers various tile layer APIs.
@@ -52,23 +36,22 @@ let map = L.map('mapid', {
 	center: [30, 30],
 	zoom: 2,
 	layers: [streets]
-});
+})
 
 // Pass our map layers into our layers control and add the layers control to the map.
 L.control.layers(baseMaps).addTo(map);
 
-/* list of mapbox attributes:
-    mapbox.streets
-    mapbox.light
-    mapbox.dark
-    mapbox.satellite
-    mapbox.streets-satellite
-    mapbox.wheatpaste
-    mapbox.streets-basic
-    mapbox.comic
-    mapbox.outdoors
-    mapbox.run-bike-hike
-    mapbox.pirates
-    mapbox.emerald
-    mapbox.high-contrast
-*/
+// Accessing the airport GeoJSON URL
+let airportData = "https://raw.githubusercontent.com/sathvikaithala/Mapping_Earthquakes/master/majorAirports.json";
+
+
+// Grabbing our GeoJSON data.
+d3.json(airportData).then(function(data) {
+    console.log(data);
+  // Creating a GeoJSON layer with the retrieved data.
+    L.geoJson(data, {
+      onEachFeature: function(feature, layer){
+          layer.bindPopup("<h2> Airport Code: " + feature.properties.faa + "</h2>\n\n<h4>Airport Name: " + feature.properties.name + "</h4>\n\n<h5>" + feature.properties.city + ", " + feature.properties.country + "</h5>" );
+      }
+    }).addTo(map);
+});
