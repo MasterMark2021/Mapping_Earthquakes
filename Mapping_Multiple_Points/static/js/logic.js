@@ -39,6 +39,7 @@ cityData.forEach(function(city) {
 
 
 
+
 /* list of mapbox attributes:
     mapbox.streets
     mapbox.light
