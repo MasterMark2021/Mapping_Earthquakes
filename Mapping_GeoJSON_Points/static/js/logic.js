@@ -23,12 +23,15 @@ let sanFranAirport =
             "coordinates":[-122.375,37.61899948120117]}}
 ]};
 // Grabbing our GeoJSON data.
-L.geoJSON(sanFranAirport).addTo(map);
+L.geoJSON(sanFranAirport, {
+    // We turn each feature into a marker on the map.
+    pointToLayer: function(feature, latlng) {
+      console.log(feature);
+      return L.marker(latlng)
+      .bindPopup("<h2>" + feature.properties.city + "</h2>");
+    }
 
-// Create a polyline using the line coordinates and make the line black.
-L.polyline(line, {
-    color: "yellow"
- }).addTo(map);
+  }).addTo(map);
 
 /* another way to set the map:
     let map = L.map("mapid", {
